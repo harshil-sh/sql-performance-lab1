@@ -67,7 +67,10 @@ indexes**, giving a clean baseline for each demonstration.
 
 ### 01 – Missing Indexes
 
-**File:** `scenarios/01_missing_indexes.sql`
+**Files:**
+- `scenarios/01_missing_indexes/before.sql`
+- `scenarios/01_missing_indexes/after.sql`
+- `scenarios/01_missing_indexes/optimization.sql`
 
 **Problem:** Without non-clustered indexes every query touching the
 `Transactions` table performs a full Clustered Index Scan — reading all
@@ -108,7 +111,10 @@ surface recommendations automatically after baseline queries execute.
 
 ### 02 – Covering Indexes
 
-**File:** `scenarios/02_covering_indexes.sql`
+**Files:**
+- `scenarios/02_covering_indexes/before.sql`
+- `scenarios/02_covering_indexes/after.sql`
+- `scenarios/02_covering_indexes/optimization.sql`
 
 **Problem:** A non-clustered index that covers only the key column forces a
 Key Lookup for every row that matches the seek to retrieve non-key columns from
@@ -149,7 +155,10 @@ elimination of all key lookups.
 
 ### 03 – SARGability
 
-**File:** `scenarios/03_sargability.sql`
+**Files:**
+- `scenarios/03_sargability/before.sql`
+- `scenarios/03_sargability/after.sql`
+- `scenarios/03_sargability/optimization.sql`
 
 **Problem:** A predicate is *SARGable* when SQL Server can evaluate it with an
 index seek. Wrapping an indexed column in a function, using implicit type
@@ -178,7 +187,10 @@ scans regardless of how many indexes exist.
 
 ### 04 – Window Functions
 
-**File:** `scenarios/04_window_functions.sql`
+**Files:**
+- `scenarios/04_window_functions/before.sql`
+- `scenarios/04_window_functions/after.sql`
+- `scenarios/04_window_functions/optimization.sql`
 
 **Problem:** Classic row-by-row approaches (correlated sub-queries, cursors,
 self-joins) compute aggregates with O(n²) or O(n·k) complexity. SQL Server
@@ -213,7 +225,10 @@ combination. Always measure with and without the supporting index.
 
 ### 05 – Keyset Pagination
 
-**File:** `scenarios/05_keyset_pagination.sql`
+**Files:**
+- `scenarios/05_keyset_pagination/before.sql`
+- `scenarios/05_keyset_pagination/after.sql`
+- `scenarios/05_keyset_pagination/optimization.sql`
 
 **Problem:** `OFFSET n ROWS FETCH NEXT k ROWS ONLY` must skip all `n` rows on
 every page request. At page 100 000 with page size 25 the engine traverses
@@ -260,7 +275,10 @@ unique composite sort key to guarantee stable page boundaries.
 
 ### 06 – Index Fragmentation
 
-**File:** `scenarios/06_index_fragmentation.sql`
+**Files:**
+- `scenarios/06_index_fragmentation/before.sql`
+- `scenarios/06_index_fragmentation/after.sql`
+- `scenarios/06_index_fragmentation/optimization.sql`
 
 **Problem:** Random inserts cause B-tree page splits, and random deletes leave
 sparse pages. High fragmentation means sequential reads become random I/Os —
@@ -293,7 +311,7 @@ Fragmentation > 30%  → ALTER INDEX … REBUILD     (ONLINE = ON where availabl
 page_count     < 100 → Skip (statistics update only)
 ```
 
-**Adaptive maintenance script** (included in `scenarios/06_index_fragmentation.sql`):
+**Adaptive maintenance script** (included in `scenarios/06_index_fragmentation/optimization.sql`):
 
 ```sql
 SELECT
@@ -362,15 +380,45 @@ sql-performance-lab1/
 │   ├── 01_schema.sql                 ← database + table DDL
 │   └── 02_data_generation.sql        ← 10 M-row data population
 └── scenarios/
-    ├── 01_missing_indexes.sql        ← Scenario 1: Missing Indexes
-    ├── 02_covering_indexes.sql       ← Scenario 2: Covering Indexes
-    ├── 03_sargability.sql            ← Scenario 3: SARGability
-    ├── 04_window_functions.sql       ← Scenario 4: Window Functions
-    ├── 05_keyset_pagination.sql      ← Scenario 5: Keyset Pagination
-    └── 06_index_fragmentation.sql    ← Scenario 6: Index Fragmentation
+    ├── 01_missing_indexes/
+    │   ├── before.sql
+    │   ├── after.sql
+    │   ├── optimization.sql
+    │   └── README.md
+    ├── 02_covering_indexes/
+    │   ├── before.sql
+    │   ├── after.sql
+    │   ├── optimization.sql
+    │   └── README.md
+    ├── 03_sargability/
+    │   ├── before.sql
+    │   ├── after.sql
+    │   ├── optimization.sql
+    │   └── README.md
+    ├── 04_window_functions/
+    │   ├── before.sql
+    │   ├── after.sql
+    │   ├── optimization.sql
+    │   └── README.md
+    ├── 05_keyset_pagination/
+    │   ├── before.sql
+    │   ├── after.sql
+    │   ├── optimization.sql
+    │   └── README.md
+    └── 06_index_fragmentation/
+        ├── before.sql
+        ├── after.sql
+        ├── optimization.sql
+        └── README.md
 ```
 
-Each scenario script is self-contained and annotated with:
+Each scenario folder now includes:
+- A `before.sql` baseline script
+- An `after.sql` optimized script
+- An `optimization.sql` full deep-dive script
+- A scenario `README.md` with placeholders for plan analysis and results
+
+Each SQL script is annotated with:
 - The **problem** it demonstrates
 - **Baseline** queries with non-SARGable / unoptimised forms
 - **Commented-out execution plan** ASCII art showing operator choices
