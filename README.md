@@ -39,8 +39,9 @@ has one clustered index on `TransactionID` and starts with **no non-clustered
 indexes**, giving a clean baseline for each demonstration.
 
 
-### Schema Daigeam
+### Schema Diagram
 ```mermaid
+
 erDiagram
     CUSTOMERS ||--o{ ACCOUNTS : "owns"
     CUSTOMERS ||--o{ LOANS : "applies_for"
@@ -87,7 +88,7 @@ erDiagram
         datetime2 AlertTimestamp
     }
 	
-
+```
 ---
 
 ## Setup
