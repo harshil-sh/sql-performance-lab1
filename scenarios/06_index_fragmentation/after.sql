@@ -1,7 +1,6 @@
 -- =============================================================================
 -- SQL Server Performance Lab
 -- File: scenarios/06_index_fragmentation/after.sql
-<<<<<<< HEAD
 -- Scenario: Index Fragmentation — AFTER (REBUILD with FILLFACTOR=85)
 --
 -- Applies ALTER INDEX … REBUILD WITH (FILLFACTOR=85, ONLINE=ON) to both
@@ -18,17 +17,11 @@
 --
 -- Run AFTER: scenarios/06_index_fragmentation/before.sql
 --            + scenarios/06_index_fragmentation/optimization.sql
-=======
--- Scenario: Index Fragmentation - AFTER
---
--- Applies REORGANIZE and REBUILD, then measures fragmentation and performance.
->>>>>>> 35ed13f176cabce962f20f6a88667da75306794a
 -- =============================================================================
 
 USE BankingLab;
 GO
 
-<<<<<<< HEAD
 -- -----------------------------------------------------------------------
 -- SETUP: if running standalone (skipping optimization.sql), ensure the
 --        fragmented table exists first (re-run before.sql).
@@ -128,29 +121,11 @@ KEY OBSERVATIONS:
 --         Both logical AND physical reads improve this time.
 -- -----------------------------------------------------------------------
 DBCC DROPCLEANBUFFERS;   -- flush clean pages; requires sysadmin
-=======
--- Step 1: REORGANIZE (online, incremental)
-ALTER INDEX IX_FragDemo_AccountID_TxDate ON dbo.FragDemo REORGANIZE;
-ALTER INDEX PK_FragDemo ON dbo.FragDemo REORGANIZE;
-GO
-
-SELECT
-    i.name AS IndexName,
-    ips.avg_fragmentation_in_percent AS FragmentationPct,
-    ips.page_count,
-    ips.avg_page_space_used_in_percent AS AvgPageFullPct
-FROM sys.dm_db_index_physical_stats(DB_ID(), OBJECT_ID('dbo.FragDemo'), NULL, NULL, 'SAMPLED') ips
-JOIN sys.indexes i
-    ON i.object_id = ips.object_id
-   AND i.index_id = ips.index_id
-ORDER BY ips.avg_fragmentation_in_percent DESC;
->>>>>>> 35ed13f176cabce962f20f6a88667da75306794a
 GO
 
 SET STATISTICS IO ON;
 SET STATISTICS TIME ON;
 
-<<<<<<< HEAD
 SELECT COUNT(*) AS LiveRows, SUM(Amount) AS TotalAmount
 FROM   dbo.FragDemo WITH (NOLOCK);
 
@@ -255,40 +230,3 @@ DECISION THRESHOLDS:
 --     the most visible effect is on storage-bound workloads and cold-cache
 --     scenarios (e.g. morning after a nightly batch).
 -- -----------------------------------------------------------------------
-=======
-SELECT COUNT(*), SUM(Amount)
-FROM dbo.FragDemo
-WHERE AccountID BETWEEN 1 AND 300000;
-
-SET STATISTICS IO OFF;
-SET STATISTICS TIME OFF;
-GO
-
--- Step 2: REBUILD (full reset)
-ALTER INDEX ALL ON dbo.FragDemo
-    REBUILD WITH (FILLFACTOR = 85, SORT_IN_TEMPDB = ON, ONLINE = ON);
-GO
-
-SELECT
-    i.name AS IndexName,
-    ips.avg_fragmentation_in_percent AS FragmentationPct,
-    ips.page_count,
-    ips.avg_page_space_used_in_percent AS AvgPageFullPct
-FROM sys.dm_db_index_physical_stats(DB_ID(), OBJECT_ID('dbo.FragDemo'), NULL, NULL, 'SAMPLED') ips
-JOIN sys.indexes i
-    ON i.object_id = ips.object_id
-   AND i.index_id = ips.index_id
-ORDER BY ips.avg_fragmentation_in_percent DESC;
-GO
-
-SET STATISTICS IO ON;
-SET STATISTICS TIME ON;
-
-SELECT COUNT(*), SUM(Amount)
-FROM dbo.FragDemo
-WHERE AccountID BETWEEN 1 AND 300000;
-
-SET STATISTICS IO OFF;
-SET STATISTICS TIME OFF;
-GO
->>>>>>> 35ed13f176cabce962f20f6a88667da75306794a
