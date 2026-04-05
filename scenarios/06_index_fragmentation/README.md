@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Scenario 06: Index Fragmentation — REBUILD with FILLFACTOR
 
 ## Description
@@ -67,3 +68,30 @@ Demonstrates two types of index fragmentation and the effect of `REORGANIZE` vs 
   - REBUILD removes ghost records, applies fill factor, and rebuilds the entire B-tree → both logical and physical reads recover.
   - Fragmentation affects physical I/O most severely on storage-bound systems or after cold-cache events (e.g. morning after a nightly batch that caused many splits/deletes).
 -->
+=======
+# Scenario: 06 index fragmentation
+
+## Objective
+[Add a one-paragraph objective for this scenario.]
+
+## Files
+- before.sql
+- after.sql
+- optimization.sql
+
+## Execution Plan Analysis
+### Before
+[Paste plan shape, key operators, and bottlenecks.]
+
+### After
+[Paste plan shape changes and why they improved performance.]
+
+## Results Table
+| Query/Test | Logical Reads (Before) | Logical Reads (After) | CPU Time ms (Before) | CPU Time ms (After) | Notes |
+|---|---:|---:|---:|---:|---|
+| [Query 1] |  |  |  |  |  |
+| [Query 2] |  |  |  |  |  |
+
+## Notes
+[Add caveats, assumptions, and environment details.]
+>>>>>>> 35ed13f176cabce962f20f6a88667da75306794a

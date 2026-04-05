@@ -1,6 +1,7 @@
 -- =============================================================================
 -- SQL Server Performance Lab
 -- File: scenarios/05_keyset_pagination/before.sql
+<<<<<<< HEAD
 -- Scenario: Keyset Pagination — BEFORE (OFFSET/FETCH baseline)
 --
 -- Demonstrates the O(n) page-traversal cost of OFFSET n ROWS FETCH NEXT k ROWS.
@@ -12,11 +13,17 @@
 -- degradation shown is therefore purely algorithmic, not a missing-index problem.
 --
 -- Run BEFORE: scenarios/05_keyset_pagination/optimization.sql
+=======
+-- Scenario: Keyset Pagination - BEFORE
+--
+-- Baseline pagination using OFFSET/FETCH. Cost grows with page depth.
+>>>>>>> 35ed13f176cabce962f20f6a88667da75306794a
 -- =============================================================================
 
 USE BankingLab;
 GO
 
+<<<<<<< HEAD
 -- -----------------------------------------------------------------------
 -- SETUP: create the composite sort index so OFFSET has optimal support.
 --        Drop it first only if re-running to reset a fragmented state.
@@ -124,10 +131,39 @@ SET STATISTICS TIME ON;
 SELECT TransactionID, TransactionDate, AccountID, Amount
 FROM   dbo.Transactions
 ORDER  BY TransactionDate, TransactionID
+=======
+IF EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IX_Transactions_Date_ID')
+    DROP INDEX IX_Transactions_Date_ID ON dbo.Transactions;
+GO
+
+DECLARE @PageSize INT = 25;
+
+-- Page 1
+SET STATISTICS IO ON;
+SET STATISTICS TIME ON;
+
+SELECT TransactionID, TransactionDate, AccountID, Amount, Description
+FROM dbo.Transactions
+ORDER BY TransactionDate, TransactionID
+OFFSET 0 ROWS FETCH NEXT @PageSize ROWS ONLY;
+
+SET STATISTICS IO OFF;
+SET STATISTICS TIME OFF;
+GO
+
+-- Deep page (OFFSET cost becomes significant)
+SET STATISTICS IO ON;
+SET STATISTICS TIME ON;
+
+SELECT TransactionID, TransactionDate, AccountID, Amount, Description
+FROM dbo.Transactions
+ORDER BY TransactionDate, TransactionID
+>>>>>>> 35ed13f176cabce962f20f6a88667da75306794a
 OFFSET 2499975 ROWS FETCH NEXT 25 ROWS ONLY;
 
 SET STATISTICS IO OFF;
 SET STATISTICS TIME OFF;
+<<<<<<< HEAD
 
 /*
 EXECUTION PLAN
@@ -185,3 +221,6 @@ Compare with approximate catalog count (after.sql):
 --
 -- Next step: run scenarios/05_keyset_pagination/optimization.sql
 -- -----------------------------------------------------------------------
+=======
+GO
+>>>>>>> 35ed13f176cabce962f20f6a88667da75306794a

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Scenario 05: Keyset Pagination vs OFFSET/FETCH
 
 ## Description
@@ -79,3 +80,30 @@ Demonstrates the O(n) page-traversal cost of `OFFSET n ROWS FETCH NEXT k ROWS ON
 ## Next Step
 
 See [scenarios/06_index_fragmentation/](../06_index_fragmentation/) to understand how B-tree page splits and fragmentation affect physical I/O.
+=======
+# Scenario: 05 keyset pagination
+
+## Objective
+[Add a one-paragraph objective for this scenario.]
+
+## Files
+- before.sql
+- after.sql
+- optimization.sql
+
+## Execution Plan Analysis
+### Before
+[Paste plan shape, key operators, and bottlenecks.]
+
+### After
+[Paste plan shape changes and why they improved performance.]
+
+## Results Table
+| Query/Test | Logical Reads (Before) | Logical Reads (After) | CPU Time ms (Before) | CPU Time ms (After) | Notes |
+|---|---:|---:|---:|---:|---|
+| [Query 1] |  |  |  |  |  |
+| [Query 2] |  |  |  |  |  |
+
+## Notes
+[Add caveats, assumptions, and environment details.]
+>>>>>>> 35ed13f176cabce962f20f6a88667da75306794a

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Scenario 04: Window Functions — SUM OVER vs Correlated Subquery
 
 ## Description
@@ -58,3 +59,30 @@ Demonstrates the O(n²) I/O cost of a correlated subquery computing a running to
 ## Next Step
 
 See [scenarios/05_keyset_pagination/](../05_keyset_pagination/) to learn how to replace `OFFSET/FETCH` with keyset pagination for deep-page performance.
+=======
+# Scenario: 04 window functions
+
+## Objective
+[Add a one-paragraph objective for this scenario.]
+
+## Files
+- before.sql
+- after.sql
+- optimization.sql
+
+## Execution Plan Analysis
+### Before
+[Paste plan shape, key operators, and bottlenecks.]
+
+### After
+[Paste plan shape changes and why they improved performance.]
+
+## Results Table
+| Query/Test | Logical Reads (Before) | Logical Reads (After) | CPU Time ms (Before) | CPU Time ms (After) | Notes |
+|---|---:|---:|---:|---:|---|
+| [Query 1] |  |  |  |  |  |
+| [Query 2] |  |  |  |  |  |
+
+## Notes
+[Add caveats, assumptions, and environment details.]
+>>>>>>> 35ed13f176cabce962f20f6a88667da75306794a

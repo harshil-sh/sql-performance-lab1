@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Scenario 02: Covering Indexes
 
 ## Description
@@ -57,3 +58,30 @@ Demonstrates how adding `INCLUDE` columns to a non-clustered index eliminates co
 ## Next Step
 
 See [scenarios/03_sargability/](../03_sargability/) to learn how predicate rewrites affect index usability.
+=======
+# Scenario: 02 covering indexes
+
+## Objective
+[Add a one-paragraph objective for this scenario.]
+
+## Files
+- before.sql
+- after.sql
+- optimization.sql
+
+## Execution Plan Analysis
+### Before
+[Paste plan shape, key operators, and bottlenecks.]
+
+### After
+[Paste plan shape changes and why they improved performance.]
+
+## Results Table
+| Query/Test | Logical Reads (Before) | Logical Reads (After) | CPU Time ms (Before) | CPU Time ms (After) | Notes |
+|---|---:|---:|---:|---:|---|
+| [Query 1] |  |  |  |  |  |
+| [Query 2] |  |  |  |  |  |
+
+## Notes
+[Add caveats, assumptions, and environment details.]
+>>>>>>> 35ed13f176cabce962f20f6a88667da75306794a

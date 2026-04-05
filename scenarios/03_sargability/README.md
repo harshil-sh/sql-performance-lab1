@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Scenario 03: SARGability
 
 ## Description
@@ -53,3 +54,30 @@ A predicate is **SARGable** (Search ARGument-able) when SQL Server can evaluate 
 ## Next Step
 
 See [scenarios/04_window_functions/](../04_window_functions/) for window function performance patterns.
+=======
+# Scenario: 03 sargability
+
+## Objective
+[Add a one-paragraph objective for this scenario.]
+
+## Files
+- before.sql
+- after.sql
+- optimization.sql
+
+## Execution Plan Analysis
+### Before
+[Paste plan shape, key operators, and bottlenecks.]
+
+### After
+[Paste plan shape changes and why they improved performance.]
+
+## Results Table
+| Query/Test | Logical Reads (Before) | Logical Reads (After) | CPU Time ms (Before) | CPU Time ms (After) | Notes |
+|---|---:|---:|---:|---:|---|
+| [Query 1] |  |  |  |  |  |
+| [Query 2] |  |  |  |  |  |
+
+## Notes
+[Add caveats, assumptions, and environment details.]
+>>>>>>> 35ed13f176cabce962f20f6a88667da75306794a
